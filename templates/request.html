@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Index </title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{url_for('static', filename='index.css')}}"/>
+    </head>
+    <body>
+        <script>
+            document.addEventListener("DOMContentLoaded", function(event) {
+                var requests = {{requests | safe}}
+                function getNewRequest(){
+                    if (requests.length == 0) {
+                        document.getElementById("tweet_text").innerHTML = "All done, thanks!";
+                        document.getElementById("question").innerHTML = "";
+                    }
+                    var nextString = requests.pop();
+                    document.getElementById("tweet_text").innerHTML = nextString[1];
+                    document.getElementById("question").innerHTML = "Is this " + nextString[2] + "?";
+                    buttonElems = document.getElementsByClassName("btn");
+                    for (var i = 0; i < buttonElems.length; i++){
+                        buttonElems[i].setAttribute("tweetID", nextString[0]);
+                    }
+                }
+                getNewRequest();
+
+                function handleInput(e) {
+                    console.log(e.srcElement.getAttribute("tweetID"));
+                    var outputData = {
+                        "tweetID" : e.srcElement.getAttribute("tweetID"),
+                        "answer": e.srcElement.innerHTML 
+                    } 
+                     
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "/{{username}}", true);
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+                    xhr.send(JSON.stringify(outputData));
+                     
+                    getNewRequest();
+                }
+
+                buttonElems = document.getElementsByClassName("btn");
+                for (var i = 0; i < buttonElems.length; i++){
+                    buttonElems[i].addEventListener('click', handleInput, false);
+                }
+            });
+        </script>
+        <div>
+            <div class="center">
+                <h3 id="tweet_text"></h3>
+                <hr>
+                <h4 id="question"></h4>
+                <div class="side-by-side">
+                    <button type="button" class="btn btn-success">Yes</button>
+                    <button type="button" class="btn btn-danger">No</button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
