@@ -6,3 +6,17 @@
   text-align: center;
   min-height: 100vh;
 }
+
+.consent {
+    margin: auto;
+    width: 500px;  
+}
+
+.consent-header {
+    text-align: center;
+}
+
+.buttons {
+    margin: auto;
+    width: 50%;
+}

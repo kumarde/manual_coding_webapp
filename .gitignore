@@ -1,3 +1,4 @@
 *.pyc
 sql/data
 sql/harassment-labels.db
+*.swp

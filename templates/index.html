@@ -1,9 +1,44 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title> Index </title>
+        <title> Consent Form </title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{url_for('static', filename='index.css')}}"/>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     </head>
     <body>
-        <h1> Hello, World! </h1>
+        <div class="consent">
+            <h1 class="consent-header"> Consent Form </h1>
+            <p> <b> Description: </b> You are invited to participate in a research study on understanding
+                perspectives of toxic content online. You will be asked for your
+                perspectives on 50 potentially toxic comments sourced from social
+                media platforms.</p>
+            
+            <p> <b> Time Involvement: </b> Your participation will take approximately 15 minutes. </p>
+            <p> <b> Risks and Benefits: </b> Risks related to this research include feeling targeted or potentially hurt by viewing potentially offensive comments and recalling negative experiences in the past regarding your personal experience with hateful comments online. </p>
+            <p> <b> Payments: You will receive $2 for your participation. </b> </p>
+            <p> <b> Participant's Rights: </b> If you have read this form and have decided to participate in this project, please understand your participation is voluntary and you have the right to withdraw your consent or discontinue participation at any time without penalty or loss of benefits to which you are otherwise entitled.  The alternative is not to participate.  You have the right to refuse to answer particular questions.  The results of this research study may be presented at scientific or professional meetings or published in scientific journals.  Your individual privacy will be maintained in all published and written data resulting from the study.</p>
+            <p> <b> Contact Information: </b> If you have any questions, concerns, or complaints about this research, its procedures, risks and benefits, contact the Protocol Director, Deepak Kumar, at kumarde@cs.stanford.edu.</p>
+            <div class="buttons mx-auto">
+                <button type="button" class="consent-button-yes btn btn-success">I accept.</button>
+                <button type="button" class="consent-button-no btn btn-danger">I decline.</button>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function(){
+                $(".consent-button-yes").click(function(){
+                    data = {}
+                    $.post("/consent-yes", function(data){});
+                });
+                $(".consent-button-no").click(function(){
+                    console.log("Hello2");
+                    $.post("/consent-no", function(data){
+                        if (data == "authenticated") {
+                            window.location.href = "/thank"
+                        }
+                    });
+                });
+            });
+        </script>
     </body>
 </html>

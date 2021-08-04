@@ -1,15 +1,10 @@
-CREATE TABLE IF NOT EXISTS zzma(
+CREATE TABLE IF NOT EXISTS responses(
     id integer PRIMARY KEY,
-    tweet text NOT NULL,
-    label text NOT NULL,
-    isVerified integer NOT NULL,
-    answer integer NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS kumarde(
-    id integer PRIMARY KEY,
-    tweet text NOT NULL,
-    label text NOT NULL,
-    isVerified integer NOT NULL,
-    answer integer NOT NULL
-);
+    comment_id text NOT NULL,
+    body text NOT NULL,
+    tweet_id text NOT NULL,
+    mturk_id text NOT NULL,
+    toxic_rating integer NOT NULL,
+    see_online integer NOT NULL,
+    remove_online NOT NULL
+)
